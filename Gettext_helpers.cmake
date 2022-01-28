@@ -146,20 +146,18 @@ function(configure_gettext)
 
 
         set(main_dependency "${GETTEXT_GMOFILE_DESTINATION}/${lang}/${GETTEXT_DOMAIN}.gmo")
-        if (CMAKE_GENERATOR MATCHES "Visual Studio") 
-            if(GETTEXT_INSTALL_DESTINATION)
-                # Visual Studio based workflows don't ever run the install step, but need to find the LC_MESSAGES/*.mo files 
-                # after a normal compilation run
-                set(mo_file "${GETTEXT_INSTALL_DESTINATION}/${lang}/LC_MESSAGES/${GETTEXT_DOMAIN}.mo")
-                set(main_dependency "${mo_file}")  # Modify the dependency chain to make sure the following custom command is run
-                add_custom_command(
-                    OUTPUT "${mo_file}"
-                    COMMAND ${CMAKE_COMMAND} -E copy
-                        "${GETTEXT_GMOFILE_DESTINATION}/${lang}/${GETTEXT_DOMAIN}.gmo"
-                        "${mo_file}"
-                    DEPENDS "${GETTEXT_GMOFILE_DESTINATION}/${lang}/${GETTEXT_DOMAIN}.gmo"
-                    COMMENT "Copying ${GETTEXT_GMOFILE_DESTINATION}/${lang}/${GETTEXT_DOMAIN}.gmo file to the install location ${mo_file}")
-            endif()
+        if(GETTEXT_INSTALL_DESTINATION)
+            # Visual Studio based workflows don't ever run the install step, but need to find the LC_MESSAGES/*.mo files
+            # after a normal compilation run
+            set(mo_file "${GETTEXT_INSTALL_DESTINATION}/${lang}/LC_MESSAGES/${GETTEXT_DOMAIN}.mo")
+            set(main_dependency "${mo_file}")  # Modify the dependency chain to make sure the following custom command is run
+            add_custom_command(
+                OUTPUT "${mo_file}"
+                COMMAND ${CMAKE_COMMAND} -E copy
+                    "${GETTEXT_GMOFILE_DESTINATION}/${lang}/${GETTEXT_DOMAIN}.gmo"
+                    "${mo_file}"
+                DEPENDS "${GETTEXT_GMOFILE_DESTINATION}/${lang}/${GETTEXT_DOMAIN}.gmo"
+                COMMENT "Copying ${GETTEXT_GMOFILE_DESTINATION}/${lang}/${GETTEXT_DOMAIN}.gmo file to the install location ${mo_file}")
         endif()
 
         add_custom_target("${GETTEXT_TARGET_NAME}-${lang}"
