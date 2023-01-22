@@ -1,8 +1,8 @@
 
-find_program(GETTEXT_XGETTEXT_COMMAND xgettext)
-find_program(GETTEXT_MSGFMT_COMMAND msgfmt)
-find_program(GETTEXT_MSGINIT_COMMAND msginit)
-find_program(GETTEXT_MSGMERGE_COMMAND msgmerge)
+find_program(GETTEXT_XGETTEXT_COMMAND xgettext HINTS "${CMAKE_BINARY_DIR}/_deps/gettext-src/bin")
+find_program(GETTEXT_MSGFMT_COMMAND msgfmt HINTS "${CMAKE_BINARY_DIR}/_deps/gettext-src/bin")
+find_program(GETTEXT_MSGINIT_COMMAND msginit HINTS "${CMAKE_BINARY_DIR}/_deps/gettext-src/bin")
+find_program(GETTEXT_MSGMERGE_COMMAND msgmerge HINTS "${CMAKE_BINARY_DIR}/_deps/gettext-src/bin")
 
 # configure_gettext(
 #     DOMAIN <domain-name>
